@@ -1,0 +1,30 @@
+# Create new deployment, name: 'redis-deployment'
+# image: 'redis:alpine'
+# Volume Type: 'EmptyDir'
+# Volume Name: 'redis-data'
+# mountPath: '/data'
+# status: 'Running'
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-deployment
+  namespace: vote
+spec:
+  selector:
+    matchLabels:
+      app: redis-deployment
+  template:
+    metadata:
+      labels:
+        app: redis-deployment
+    spec:
+      containers:
+        - name: redis-deployment
+          image: redis:alpine
+          volumeMounts:
+            - name: redis-data
+              mountPath: /data
+      volumes:
+        - name: redis-data
+          emptyDir: {}

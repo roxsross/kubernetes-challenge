@@ -1,0 +1,39 @@
+# Create new deployment. name: 'db-deployment'
+# image: 'postgres:9.4'
+# Volume Type: 'EmptyDir'
+# Volume Name: 'db-data'
+# mountPath: '/var/lib/postgresql/data'
+# status: 'Running'
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-deployment
+  namespace: vote  
+spec:
+  selector:
+    matchLabels:
+      app: db-deployment
+  template:
+    metadata:
+      labels:
+        app: db-deployment
+    spec:
+      containers:
+        - image: postgres:9.4
+          name: db-deployment
+          volumeMounts:
+            - name: db-data
+              mountPath: /var/lib/postgresql/data
+          ports:
+            - containerPort: 5432
+              name: db
+              protocol: TCP
+          env:
+            - name: POSTGRES_PASSWORD
+              value: test
+      volumes:
+        - name: db-data
+          emptyDir: {}
+
+

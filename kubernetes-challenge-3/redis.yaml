@@ -1,0 +1,19 @@
+# New Service, name = 'redis'
+# port: '6379'
+# targetPort: '6379'
+# type: 'ClusterIP'
+# service endpoint exposes deployment 'redis-deployment'
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  namespace: vote
+spec:
+  ports:
+    - protocol: TCP
+      port: 6379
+      targetPort: 6379
+  selector:
+    app: redis-deployment
+
